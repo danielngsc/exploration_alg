@@ -6,8 +6,9 @@
 #include<sys/ioctl.h>
 using namespace std;
 
-const int w=158;
-const int h=63;
+const int w=10000;
+const int h=5000;
+const int nfill=2000;
 
 int board[h][w];
 bool explored[h][w];
@@ -134,8 +135,8 @@ Bst bst;
 int startc=0;
 int startr=0;
 int endc=w-1;
-//int endr=h-1;
-int endr=32;
+int endr=h-1;
+//int endr=32;
 int main(){
 	srandom(time(NULL));
 	//struct winsize ws;
@@ -149,11 +150,11 @@ int main(){
 	//board=new int[h][w]
 	//explored=new bool[h][w];
 	//printBoard();
-	for(int i=0;i<3000;i++){
+	for(int i=0;i<nfill;i++){
 		board[getRandInt(0,h-1)][getRandInt(0,w-1)]++;
 	}
 
-	//Reset start and end
+	//Empty start and end
 	board[startr][startc]=0;
 	board[endr][endc]=0;
 	bst.insert(0,0,dist(startc,startr,endr,endc));
@@ -226,7 +227,7 @@ bool getPath(int sr,int sc,int er,int ec){
 		//cout<<curr->y<<" "<<curr->x<<" "<<curr->distance<<"\n";
 		if(curr->x>=0 && curr->x<w && curr->y>=0 && curr->y<h && !explored[curr->y][curr->x] && board[curr->y][curr->x]==0){
 			explored[curr->y][curr->x]=true;
-			//printBoard2();
+			//printBoard2(); //Uncomment to print progress
 			bst.insert(curr->x+1,curr->y,golden_ratio*dist(curr->x+1,curr->y,ec,er)+curr->distcovered,curr);
 			bst.insert(curr->x,curr->y+1,golden_ratio*dist(curr->x,curr->y+1,ec,er)+curr->distcovered,curr);
 			bst.insert(curr->x-1,curr->y,golden_ratio*dist(curr->x-1,curr->y,ec,er)+curr->distcovered,curr);
