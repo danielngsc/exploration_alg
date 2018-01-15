@@ -6,9 +6,9 @@
 #include<sys/ioctl.h>
 using namespace std;
 
-const int w=10000;
-const int h=5000;
-const int nfill=2000;
+const int w=45;
+const int h=45;
+const int nfill=800;
 
 int board[h][w];
 bool explored[h][w];
@@ -197,7 +197,7 @@ void printBoard2(){
 		cout<<"\n";
 
 	}
-	usleep(200000);
+	usleep(150000);
 }
 // Floor to int
 int getRandInt(int start, int end){
@@ -227,7 +227,7 @@ bool getPath(int sr,int sc,int er,int ec){
 		//cout<<curr->y<<" "<<curr->x<<" "<<curr->distance<<"\n";
 		if(curr->x>=0 && curr->x<w && curr->y>=0 && curr->y<h && !explored[curr->y][curr->x] && board[curr->y][curr->x]==0){
 			explored[curr->y][curr->x]=true;
-			//printBoard2(); //Uncomment to print progress
+			printBoard2(); //Uncomment to print progress
 			bst.insert(curr->x+1,curr->y,golden_ratio*dist(curr->x+1,curr->y,ec,er)+curr->distcovered,curr);
 			bst.insert(curr->x,curr->y+1,golden_ratio*dist(curr->x,curr->y+1,ec,er)+curr->distcovered,curr);
 			bst.insert(curr->x-1,curr->y,golden_ratio*dist(curr->x-1,curr->y,ec,er)+curr->distcovered,curr);
